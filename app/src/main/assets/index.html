@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>Income</title>
+	
+
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="css/all.css">
+	<!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="css/mdb.min.css">
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<!-- Material Design Bootstrap -->
+	
+	<!-- Our custom styles (optional) -->
+	<link rel="stylesheet" href="css/teamcs.css">
+	<link rel="icon" href="images/app_icon.png" type="image/gif" sizes="16x16">
+	<link rel="stylesheet" href="js/sweetalert2.css">
+	<link rel="stylesheet" href="js/yearpicker.css">
+
+	<style>
+		.impcolor
+		{
+			color: red;
+			font-weight: bold;
+		}
+		.my_card{
+			margin-bottom: 20px;
+		}
+		.no_link{
+			text-decoration: none;
+		}
+		@font-face 
+		{
+		  font-family: 'Pyidaungsu';
+		  src: URL('font/Pyidaungsu.ttf') format('truetype');
+		  /*src: URL('font/Win.ttf') format('truetype');*/
+		}
+		body
+		{
+			font-family: Pyidaungsu;
+			background-color:white;
+		}
+		.menudiv
+		{
+			width: 96%;
+			height: 50px;
+			margin-left: 2%;
+			background: rgb(2,110,116);
+			border-radius: 5px;
+		}
+		.menudiv1,.menudiv2
+		{
+			width: 40%;
+			height: 40px;
+			margin-top: 5px;
+			float: left;
+			margin-left: 7%;
+			border-radius: 7px;
+		}
+		.menudiv3
+		{
+			width: 25%;
+			height: 60px;
+			float: left;
+			border-radius: 7px;
+		}
+		.menudiv1
+		{
+			background-color:  #239b56  ;
+		}
+		.menudiv2
+		{
+			background-color:  #17a589 ;
+		}
+		a
+		{
+			color: white;
+			text-decoration: none;
+		}
+		.income
+		{
+			color: white;
+		}
+		.income:hover,.closeown:hover,.insert:hover
+		{
+			cursor: pointer;
+			color: blue;
+		}
+		.mymodal
+		{
+			width: 98%;
+			height: 700px;
+			/* z-index: 1000; */
+			/* position: absolute; */
+			/* left: 1%;
+			top: 65px; */
+			/* display: none; */
+		}
+		#plusmodal,#incomemodal,#searchdiv
+		{
+			width: 100%;
+			height: 700px;
+			z-index: 1000;
+			position: absolute; 
+			left: 1%;
+			top: 1px; 
+			display: none;
+		}
+		.mymodal
+		{
+			background-color:#f9e79f  ;
+		}
+		#plusmodal,#incomemodal
+		{
+			background-color: rgba(0,0,0,0.1);
+		}
+		.plusbtn
+		{
+			width: 60px;
+			height: 60px;
+			color: green;
+		}
+		.minusbtn
+		{
+			width: 60px;
+			height: 60px;
+			color: red;
+		}
+		.report
+		{
+			width: 60px;
+			height: 60px;
+			color: blue;
+		}
+		#toappend
+		{
+			width: 100%;
+			height:auto;
+			overflow: auto;
+		}
+		.insert,.closeown
+		{
+			width: 40%;height: 100%;margin-left: 7%;float: left;color: white;border-radius: 6px;
+		}
+	
+		#mychart,#searchdiv
+		{
+			display: none;
+		}
+		.closeadd,.closeincome
+		{
+			color: white;
+		}
+		table
+		{
+			text-align: left;
+		}
+		th
+		{
+			color:teal;
+		}
+		td
+		{
+			color:blue;
+		}
+		.incomebtn
+		{
+			font-weight: bold;
+			color: #239b56;
+		}
+		.outcomebtn
+		{
+			font-weight: bold;
+			color: rebeccapurple;
+		}
+		.incomebtn:hover,.outcomebtn:hover
+		{
+			cursor: pointer;
+		}
+		.pm
+		{
+			width: 10%;
+			height: 100px;
+			z-index: 1000;
+			position: absolute;
+			left: 90%;
+			top: 30%; 
+		}
+		.aboutdiv
+		{
+			width: 100%;
+			height: 100%;
+			z-index: 1000;
+			position: absolute;
+			left: 0%;
+			top: 8%;
+			display: none;
+			background-color: #17a589;	
+		}
+		.demotext
+		{
+			background: #FFFFFF;
+			text-shadow: 0 1px #808d93, -1px 0 #cdd2d5, -1px 2px #808d93, -2px 1px #cdd2d5, -2px 3px #808d93, -3px 2px #cdd2d5, -3px 4px #808d93, -4px 3px #cdd2d5, -4px 5px #808d93, -5px 4px #cdd2d5, -5px 6px #808d93, -6px 5px #cdd2d5, -6px 7px #808d93, -7px 6px #cdd2d5, -7px 8px #808d93, -8px 7px #cdd2d5;
+			background: #FFFFFF;
+		}
+	</style>
+</head>
+
+<body class="fixed-sn white-skin">
+
+	<!-- Main Navigation -->
+	<header>
+		
+		<!-- Navbar -->
+		<nav class="navbar fixed-top navbar-expand-lg scrolling-navbar double-nav" id="nav_id">
+			<!-- SideNav slide-out button -->
+			<div class="float-left"> <a href="#" data-activates="slide-out" class="button-collapse"><i class="fas fa-bars" style="display: none;"></i></a>
+			</div>
+			<!-- Breadcrumb -->
+			<div class="title_text mr-auto align-center text-center">
+				<h4 id="header_id">ဝင်ငွေထွက်ငွေ</h4>
+			</div>
+			<span class="about">About</span>
+		</nav>
+		
+	</header>
+	<!-- Main Navigation -->
+
+	<!-- Main layout -->
+	<main>
+		<div class="container-fluid">
+			<!-- Section: Intro -->
+			<section id="intro_section">
+                <div style="width: 100%;height: 60px;margin-top: 0px;">
+                    <div class="menudiv3" style="margin-top: 0px;">
+						<!-- <center><i class="fas fa-plus-circle plusbtn"></i></center> -->
+						<center><span class="incomebtn demotexta">ဝင်ငွေ(+)</span></center>
+                    </div>
+                    <div class="menudiv3" style="margin-top: 0px;">
+						<!-- <center><i class="fas fa-minus-circle minusbtn"></i></center> -->
+						<center><span class="outcomebtn demotexta">ထွက်ငွေ(-)</span></center>
+                    </div>
+                    <div class="menudiv3" style="margin-top: 0px;">
+                        <center><i class="fas fa-chart-line report"></i></center>
+                    </div>
+                    <div class="menudiv3" style="color:#ff4444;">
+                        <center><i class="fas fa-search search"></i></center>
+                    </div>
+                </div>
+                <div class="card">
+					
+					<div id="toappend">
+							
+					</div>
+
+					<!-- ========== Chart =============-->
+					<div id="mychart" style="padding-top:25px;">
+						<canvas id="pieChart"></canvas>
+					</div>
+					<!-- ========== End Chart =============-->
+
+					<!-- ============= Search div =====================-->
+					<div id='searchdiv' style="width: 80%;height: 45px;margin-left: 10%;">
+						<div style="width: 33%;float: left;height: 40px;">
+							<select class="browser-default custom-select" id="searchmonth">
+								<option value="">လရွေးချယ်ပါ</option>
+								<option value="1">၁</option>
+								<option value="2">၂</option>
+								<option value="3">၃</option>
+								<option value="4">၄</option>
+								<option value="5">၅</option>
+								<option value="6">၆</option>
+								<option value="7">၇</option>
+								<option value="8">၈</option>
+								<option value="9">၉</option>
+								<option value="10">၁၀</option>
+								<option value="11">၁၁</option>
+								<option value="12">၁၂</option>
+							</select>
+						</div>
+						<div style="width: 33%;float: left;height: 40px;">
+							<input class="yearpicker form-control" id="searchyear" placeholder="ခုနှစ်ရွေးချယ်ပါ">
+						</div>
+						<div style="width: 33%;float: left;height: 40px;">
+							<button type="button" class="btn btn-rounded btn-amber searchbtn" style="margin-top: 0pt;"><i class="fas fa-search pr-2" aria-hidden="true"></i></button>
+						</div>
+
+						<div class="toappendsearch">
+
+						</div>
+					</div>
+					<!-- ============= end Search div =====================-->
+
+					<!-- ================ add outcome =============================-->
+				<div id="plusmodal" >
+					<div style="width: 80%;height: 250px;margin-top: 20%;margin-left: 10%;background-color:burlywood;border-radius: 7px;">
+						<br>
+						<center><span style="color: blue;">ထွက်ငွေ</span></center>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<select class="browser-default custom-select outcometype">
+							  <option selected>အမျိုးအစားရွေးချယ်ပါ</option>
+							  <option value="အစားအစာ">အစားအသောက်</option>
+							  <option value="အဝတ်အစား">အဝတ်အစား</option>
+							  <option value="ဖုန်းဘေ">ဖုန်းဘေ</option>
+							  <option value="အလှူ">အလှူ</option>
+							  <option value="မိဘကန်တော့">မိဘကန်တော့</option>
+							  <option value="အကြွေး">အကြွေး</option>
+							  <option value="အထွေထွေ">အထွေထွေ</option>
+							</select>
+						</div>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<input type="number" class="form-control" id="outcomeamount" placeholder="ပမာဏ...">
+						</div>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<center><div class="saveoutcome insert">
+								<!-- <center><div style="margin-top: 7px;" class="insertoutcome"><span>သိမ်းမည်</span></div></center> -->
+								<button type="button" class="btn btn-rounded btn-primary insertoutcome"><i class="fas fa-save pr-2" aria-hidden="true"></i>သိမ်းမည်</button>
+							</div></center>
+							<center><div class="closeadda closeowna">
+								<!-- <center><div style="margin-top: 7px;"><span>ပိတ်မည်</span></div></center> -->
+								<button type="button" class="btn btn-rounded btn-amber closeadd"><i class="fas fa-times pr-2" aria-hidden="true"></i>ပိတ်မည်</button>
+							</div></center>
+						</div>
+					</div>
+				</div>
+				<!-- ================ add outcome =============================-->
+
+				<!-- ================ add income =============================-->
+				<div id="incomemodal">
+					<div style="width: 80%;height: 250px;margin-top: 20%;margin-left: 10%;background-color: burlywood;border-radius: 7px;">
+						<br>
+						<center><span style="color: blue;">ဝင်ငွေ</span></center>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<input type="text" class="form-control" id="incometitle" placeholder="ခေါင်းစဉ်...">
+						</div>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<input type="number" class="form-control" id="incomeamount" placeholder="ပမာဏ...">
+						</div>
+						<div style="width:90%;height:40px;margin-left:5%;margin-top: 20px;">
+							<center>
+								<div class="saveincomea insert">
+									<!-- <center><div style="margin-top: 7px;"><span>သိမ်းမည်</span></div></center> -->
+									<button type="button" class="btn btn-rounded btn-primary saveincome"><i class="fas fa-save pr-2" aria-hidden="true"></i>သိမ်းမည်</button>
+								</div>
+							</center>
+							<center>
+								<div class="closeincome closeowna">
+									<!-- <center><div style="margin-top: 7px;"><span>ပိတ်မည်</span></div></center> -->
+									<button type="button" class="btn btn-rounded btn-amber closeincome"><i class="fas fa-times pr-2" aria-hidden="true"></i>ပိတ်မည်</button>
+								</div>
+							</center>
+						</div>
+					</div>
+				</div>
+				<!-- ================ add income =============================-->
+                </div>	
+			</section>
+			<!-- Section: Intro -->
+
+
+			<div class="pm">
+				<div style="height:30% ;">
+					<center><i class="fas fa-plus-circle plusbtn"></i></center>
+				</div>
+				<div style="height:30% ;">
+					<center><i class="fas fa-minus-circle minusbtn"></i></center>
+				</div>
+			</div>
+
+
+			<div class="aboutdiv">
+				<button type="button" class="close aboutclose" aria-label="Close">
+					<span aria-hidden="true" style="color: red;font-weight: bold;">×</span>
+				  </button><br><br>
+				<p>
+					<center><span>ဝင်ငွေထွက်ငွေစာရင်းများကို ရိုးရှင်းလွယ်ကူစွာ အသုံးပြုနိုင်အောင်လို့ ရေးသားထားခြင်းဖြစ်ပါတယ်။ လိုအပ်သည်များ (သို့) အကြံပြုချက်များရှိရင်လည်း ကျွန်တော်တို့ facebook page မှာလာရောက် အကြံပေးပြောကြားနိုင်ပါတယ်...။</span></center>
+				</p>
+				<p>
+					<center>Facebook page : <a href="https://www.facebook.com/mmsoftware100"><span style="color: red;">mmsoftware100</span></a></center>
+				</p>
+			</div>
+
+
+		</div>
+	</main>
+	<!-- Main layout -->
+
+
+
+	<!-- SCRIPTS -->
+	<!-- JQuery -->
+	<script src="js/jquery-3.4.1.min.js"></script>
+	<!-- Bootstrap tooltips -->
+	<script type="text/javascript" src="js/popper.min.js"></script>
+	<!-- Bootstrap core JavaScript -->
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!-- MDB core JavaScript -->
+	<!-- <script type="text/javascript" src="js/mdb.min.js"></script> -->
+
+	
+	<script src="js/modernizr.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/underscore.min.js"></script>
+	<script src="js/backbone.js"></script>
+	<script src="js/sweetalert2.js"></script>
+	<script src="js/chart.js"></script>
+	<script src="js/yearpicker.js"></script>
+
+
+	<!-- Initializations -->
+	<script type="text/javascript">
+		
+
+		function convertEngToMyanmar(num)
+		{
+			num += "";
+			num = num.split(0).join("၀");
+			num = num.split(1).join("၁");
+			num = num.split(2).join("၂");
+			num = num.split(3).join("၃");
+			num = num.split(4).join("၄");
+			num = num.split(5).join("၅");
+			num = num.split(6).join("၆");
+			num = num.split(7).join("၇");
+			num = num.split(8).join("၈");
+			num = num.split(9).join("၉");
+			return num;
+		}
+		function convertMyanmarToEnglish(num) 
+		{
+			num += "";
+			num = num.split("၀").join("0");
+			num = num.split("၁").join("1");
+			num = num.split("၂").join("2");
+			num = num.split("၃").join("3");
+			num = num.split("၄").join("4");
+			num = num.split("၅").join("5");
+			num = num.split("၆").join("6");
+			num = num.split("၇").join("7");
+			num = num.split("၈").join("8");
+			num = num.split("၉").join("9");
+			return num;
+		}
+		// =========== get from local storage =============
+		function getdata()
+		{
+			$("#toappend").empty();
+			var rkm=localStorage.localdata;
+			if(rkm)
+			{
+				var data=JSON.parse(rkm);
+				//$("#toappend").append('</table></center></div>');
+				for(i=0;i<data.length;i++)
+				{
+					$("#toappend").prepend('<div style="width: 100%;height: auto;overflow-x:auto;margin-top:7px;"><center><table class="mytable" cellspacing="0" width="100%" style="background-color: rgba(0,0,0,0.2);"><tr><th>ရက်စွဲ</th><th>ခေါင်းစဉ်</th><th>ပမာဏ</th><th>ဝင်ငွေစုစုပေါင်း</th></tr><tr><td>'+convertEngToMyanmar(data[i].date+'/'+data[i].newmonth+'/'+data[i].newyear)+'</td><td>'+data[i].title+'</td><td>'+convertEngToMyanmar(data[i].amount)+' ကျပ်</td><td>'+convertEngToMyanmar(data[i].totals)+' ကျပ်</td></tr></table></center></div>');
+					//$("#toappend").prepend('<tr><td>'+convertEngToMyanmar(data[i].date+'/'+data[i].newmonth+'/'+data[i].newyear)+'</td><td>'+data[i].title+'</td><td>'+convertEngToMyanmar(data[i].amount)+' ကျပ်</td><td>'+convertEngToMyanmar(data[i].totals)+' ကျပ်</td></tr>');
+				}
+				//$("#toappend").prepend('<div style="width: 100%;height: 45px;margin-top:7px;"><center><table class="mytable" cellspacing="0" width="100%" style="background-color: rgba(0,0,0,0.2);"><tr><td>ရက်စွဲ</td><td>ခေါင်းစဉ်</td><td>ပမာဏ</td><td>ဝင်ငွေစုစုပေါင်း</td></tr>');
+			}
+			else
+			{
+				$("#toappend").append("<center><span style='color:red;'>စာရင်းများမထည့်ရသေးပါ</span></center>");
+			}
+		}
+
+		function outcome()
+		{
+			var rkm=localStorage.outcome;
+			if(rkm)
+			{
+				var data=JSON.parse(rkm);
+				$("#toappend").empty();
+				for(i=0;i<data.length;i++)
+				{
+					$("#toappend").prepend('<div style="width: 100%;height: 45px;margin-top:7px;"><center><table class="mytable" cellspacing="0" width="100%" style="background-color: rgba(0,0,0,0.2);"><tr><th>ရက်စွဲ</th><th>ခေါင်းစဉ်</th><th>သုံးငွေ</th><th>လက်ကျန်ငွေ</th></tr><tr><td>'+convertEngToMyanmar(data[i].date+'/'+data[i].newmonth+'/'+data[i].newyear)+'</td><td>'+data[i].outcometype+'</td><td>'+convertEngToMyanmar(data[i].outcomeamount)+' ကျပ်</td><td>'+convertEngToMyanmar(data[i].remain)+' ကျပ်</td></tr></table></center></div>');
+				}
+			}
+		}
+		$(document).ready(function(){
+			getdata();
+			//outcome();
+
+			var today=new Date();
+			console.log(today);
+			var date = today.getDate();
+			console.log(date);
+			var month = today.getMonth();
+			console.log(month);
+			var day = today.getDay();
+			console.log(day);
+			var year=today.getYear();
+
+
+			$(document).on("click",".income",function(){
+				console.log("income is clicked");
+				$(".mymodal").show();
+			});
+			$(document).on("click",".minusbtn",function(){
+				$("#outcomeamount").val("");
+				//$(".outcometype").val("");
+				$("#plusmodal").show();
+				outcome();
+				$("#mychart").hide();
+				$("#toappend").show();
+				$("#searchdiv").hide();
+			});
+			$(document).on("click",".closeadd",function(){
+				$("#plusmodal").hide();
+			});
+			$(document).on("click",".plusbtn",function(){
+				$("#incomeamount").val("");
+				$("#incometitle").val("");
+				$("#incomemodal").show();
+				getdata();
+				$("#mychart").hide();
+				$("#toappend").show();
+				$("#searchdiv").hide();
+			});
+			$(document).on("click",".closeincome",function(){
+				$("#incomemodal").hide();
+			});
+			// ========================= save income ==============
+			console.log((month+1)+"  :  "+(year+1900));
+			var newmonth=month+1,newyear=year+1900;
+			$(document).on("click",".saveincome",function(){
+				var title=$("#incometitle").val();
+				var amount=$("#incomeamount").val();console.log("title :"+title+" ,amount :"+amount);
+				var arr=new Array();
+				var totals=amount;
+				arr=[{date,newmonth,newyear,title,amount,totals}];//alert(arr[0].amount);
+				var org=JSON.parse(localStorage.getItem('localdata'));
+				var orgtotal=0;
+				var rkm=localStorage.localdata;
+				if(rkm)
+				{
+					var data=JSON.parse(rkm);
+					for(i=0;i<data.length;i++)
+					{
+						if(data[i].newmonth==newmonth && data[i].newyear==newyear)
+						{
+							orgtotal+= parseInt(data[i].amount);
+						}
+					}
+				}
+				if(org)
+				{
+					var totals=parseInt(orgtotal)+parseInt(arr[0].amount);//alert(arr.amount);
+					arrs=[{date,newmonth,newyear,title,amount,totals}];
+					var newdata=org.concat(arrs);
+					
+					localStorage.setItem('localdata',JSON.stringify(newdata));
+				}
+				else
+				{
+					localStorage.setItem('localdata',JSON.stringify(arr));
+				}
+				$("#incomemodal").hide();
+				getdata();
+			});
+			
+			// ================================ save outcome ================================
+			$(document).on("click",".insertoutcome",function(){
+				var outcometype=$(".outcometype").val();
+				var outcomeamount=$("#outcomeamount").val();console.log(outcometype+outcomeamount);
+
+				var org=JSON.parse(localStorage.getItem('outcome'));
+				var totals=0;
+				var rkm=localStorage.localdata;
+				if(rkm)
+				{
+					var data=JSON.parse(rkm);
+					for(i=0;i<data.length;i++)
+					{
+						if(data[i].newmonth==newmonth && data[i].newyear==newyear)
+						{
+							totals+= parseInt(data[i].amount);
+						}
+					}
+				}
+				if(org)
+				{
+					var totalamount=0;
+					for(i=0;i<org.length;i++)
+					{
+						if(org[i].newmonth==newmonth && org[i].newyear==newyear)
+						{
+							totalamount+=parseInt(org[i].outcomeamount);
+						}
+					}
+					totalamount+=parseInt(outcomeamount);
+					var remain=totals-totalamount;//alert(totals+'-'+totalamount);alert(remain); 
+					var arr=new Array();
+					arrs=[{date,newmonth,newyear,outcometype,outcomeamount,remain}];
+					var newdata=org.concat(arrs);
+					localStorage.setItem('outcome',JSON.stringify(newdata));
+				}
+				else
+				{
+					var arr=new Array();
+					var remain=totals-outcomeamount;//alert(remain);
+					arr=[{date,newmonth,newyear,outcometype,outcomeamount,remain}];
+					localStorage.setItem('outcome',JSON.stringify(arr));
+				}
+				$("#plusmodal").hide();
+				outcome();
+			});
+
+			// ======================= chart ================
+			function report()
+			{
+				var orgs=JSON.parse(localStorage.getItem('outcome'));
+				if(orgs)
+				{
+					var food=0,phone=0;cloth=0,offer=0,other=0,parents=0,borrow=0;
+					for(i=0;i<orgs.length;i++)
+					{
+						if(orgs[i].newmonth==newmonth && orgs[i].newyear==newyear)
+						{
+							if(orgs[i].outcometype=='အစားအစာ') food+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='အဝတ်အစား') cloth+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='ဖုန်းဘေ') phone+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='အလှူ') offer+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='အထွေထွေ') other+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='မိဘကန်တော့') parents+= parseInt(orgs[i].outcomeamount);
+							else if(orgs[i].outcometype=='အကြွေး') borrow+= parseInt(orgs[i].outcomeamount);
+						}
+					}
+
+					//pie
+					var ctxP = document.getElementById("pieChart").getContext('2d');
+					var myPieChart = new Chart(ctxP, {
+						type: 'pie',
+						data: {
+						labels: ["အစားအသောက်", "ဖုန်းဘေ", "အဝတ်အစား", "အလှူ", "အထွေထွေ","မိဘကန်တော့","အကြွေး"],
+						datasets: [{
+						data: [food, phone, cloth, offer, other,parents,borrow],
+						backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360","#047CBA","green"],
+						hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774","#047CBA","green"]
+						}]
+						},
+						options: {
+						responsive: true
+						}
+					});
+				}
+				else
+				{
+					//pie
+					var ctxP = document.getElementById("pieChart").getContext('2d');
+					var myPieChart = new Chart(ctxP, {
+						type: 'pie',
+						data: {
+						labels: ["အစားအသောက်", "ဖုန်းဘေ", "အဝတ်အစား", "အလှူ", "အထွေထွေ"],
+						datasets: [{
+						data: [0, 0, 0, 0, 0],
+						backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
+						hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
+						}]
+						},
+						options: {
+						responsive: true
+						}
+					});
+				}
+			}
+			
+			$(document).on("click",".report",function(){
+				report();
+				$("#mychart").show();
+				$("#toappend").hide();
+				$("#searchdiv").hide();
+			});
+			// =========================== search ============================
+			$(document).on("click",".search",function(){
+				$("#searchdiv").show();
+				$("#toappend").hide();
+				$("#mychart").hide();
+			});
+			$(document).on("click",".searchbtn",function(){
+				//alert("ok par");
+				var month=$("#searchmonth").val();
+				var year=convertMyanmarToEnglish($("#searchyear").val());//alert(localStorage.getItem(''+toString(month)+toString(year)+''));
+				var income=0,outcome=0;
+				var rkm=localStorage.localdata;
+				if(rkm)
+				{
+					var data=JSON.parse(rkm);
+					for(i=0;i<data.length;i++)
+					{
+						if(data[i].newmonth==month && data[i].newyear==year)
+						{
+							income+= parseInt(data[i].amount);
+						}
+					}
+				}
+				var orgs=localStorage.getItem('outcome');
+				if(orgs)
+				{
+					var data=JSON.parse(orgs);
+					for(i=0;i<data.length;i++)
+					{
+						if(data[i].newmonth==month && data[i].newyear==year)
+						{
+							outcome+= parseInt(data[i].outcomeamount);
+						}
+					}
+				}
+				//alert("total income: "+income+",totaloutcome :"+outcome);
+				$(".toappendsearch").empty();
+				$(".toappendsearch").append("<br><br><center><table class='table'><tr><td style='color:green;'>စုစုပေါင်းဝင်ငွေ</td><td style='color:green;'>"+convertEngToMyanmar(income)+" ကျပ်</td></tr><tr><td style='color:red;'>စုစုပေါင်းထွက်ငွေ</td><td style='color:red;'>"+convertEngToMyanmar(outcome)+" ကျပ်</td></tr><tr><td style='color:lime;'>လက်ကျန်ငွေ</td><td style='color:lime;'>"+convertEngToMyanmar(parseInt(income)-parseInt(outcome))+" ကျပ်</td></tr></table></center>");
+			});
+
+			$(document).on("click",".outcomebtn",function(){
+				outcome();
+				$("#mychart").hide();
+				$("#toappend").show();
+				$("#searchdiv").hide();
+			});
+			$(document).on("click",".incomebtn",function(){
+				getdata();
+				$("#mychart").hide();
+				$("#toappend").show();
+				$("#searchdiv").hide();
+			});
+			$(document).on("click",".about",function(){
+				$(".aboutdiv").show();
+			});
+			$(document).on("click",".aboutclose",function(){
+				$(".aboutdiv").hide();
+			});
+		});
+	</script>
+	<!-- Our JavaScript -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('.yearpicker').yearpicker();
+			$('.yearpicker').yearpicker({	
+			// Auto Hide	
+			autoHide:true,
+			// Initial Year	
+			year:null,
+			// Start Year	
+			startYear:null,
+			// End Year
+			endYear:null,
+			// Element tag
+			itemTag:'li',
+			// Default CSS classes
+			
+			selectedClass:'selected',
+			
+			disabledClass:'disabled',
+			
+			hideClass:'hide',
+			
+			highlightedClass:'highlighted',
+			
+			
+			// Custom template
+			
+			template: `<div class="yearpicker-container">
+			
+						<div class="yearpicker-header">
+			
+							<div class="yearpicker-prev" data-view="yearpicker-prev">&lsaquo;</div>
+			
+							<div class="yearpicker-current" data-view="yearpicker-current">SelectedYear</div>
+			
+							<div class="yearpicker-next" data-view="yearpicker-next">&rsaquo;</div>
+			
+						</div>
+			
+						<div class="yearpicker-body">
+			
+							<ul class="yearpicker-year" data-view="years">
+			
+							</ul>
+			
+						</div>
+			
+					</div>
+			
+			`,  
+			});
+			$('.yearpicker').yearpicker({
+			show:null,
+			hide:null,
+			pick:null
+			});
+	
+		});
+		 
+	
+	
+	</script>
+</body>
+</html>

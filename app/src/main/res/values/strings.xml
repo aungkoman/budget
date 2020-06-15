@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">2d</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="loading_message">လုပ်ဆောင်နေပါသည်...ခေတ္တစောင့်ပေးပါ</string>
+    <!-- url -->
+    <string name="url">https://mmsoftware100.com/2d/client/</string>
+
+    <!-- ads code -->
+    <!-- test ads app id : ca-app-pub-3940256099942544~3347511713 -->
+    <string name="ads_app_id">ca-app-pub-4864304355860813~3360279797</string>
+    <!-- test banner code ca-app-pub-3940256099942544/6300978111 -->
+    <string name="banner1">ca-app-pub-4864304355860813/8421034782</string>
+    <!-- test  interstitials ca-app-pub-3940256099942544/1033173712 -->
+    <string name="interstitial1">ca-app-pub-4864304355860813/4481789777</string>
+</resources>
